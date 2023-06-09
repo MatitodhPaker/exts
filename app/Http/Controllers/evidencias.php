@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Http\Controllers\Controller;
 use App\Models\alumnos;
 use App\Models\evidencias as ModelsEvidencias;
@@ -32,7 +31,6 @@ class evidencias extends Controller
      */
     public function create()
     {
-        //hola
     }
 
     /**
@@ -67,9 +65,6 @@ class evidencias extends Controller
 
         $item->save();
         return redirect('/inicio')->with('success', 'Datos ingresados');
-        
-
-        
     }
 
     /**

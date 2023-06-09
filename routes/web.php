@@ -1,9 +1,9 @@
 <?php
-
 use App\Http\Controllers\Auth;
 use App\Http\Controllers\evidencias;
 use App\Http\Controllers\exts;
 use App\Http\Controllers\registro;
+
 use Illuminate\Support\Facades\Route;
 
 /*
