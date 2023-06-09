@@ -16,10 +16,14 @@ class CreateEvidenciasTable extends Migration
         Schema::create('evidencias', function (Blueprint $table) {
             $table->id();
             $table->string('tipo_evidencia');
-            $table->string('credito');
-            $table->integer('horas_asignadas');
-            $table->string('archivo');
-            $table->string('carpeta');
+            $table->string('credito')->nullable();
+            $table->integer('horas_asignadas')->nullable();
+            $table->string('archivo')->nullable();
+            $table->string('nombre_archivo')->nullable();
+            $table->string('mooc')->nullable();
+            $table->string('nombre_mooc')->nullable();
+            $table->string('carpeta')->nullable();
+            $table->string('estado');
             $table->unsignedInteger('id_user');
             $table->unsignedInteger('id_alumno');
             $table->timestamps();

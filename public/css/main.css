@@ -1,0 +1,42 @@
+.appbar{
+    color: white;
+    background-color: #1b396a;
+    font-family: sans-serif;
+}
+.imagen{
+    width: 45%;
+    margin-left: 40px;
+}
+.footer{
+    color: white;
+    background-color: #1b396a;
+    font-family: inherit;
+}
+.login{
+    background-color: #807e82;
+    font-family: inherit;
+    color: white;
+    font-size: 45px;
+    border-radius: 10%;
+    border: -0;
+}
+.logimg{
+    width: 75%;
+}
+.btn-tec {
+    background-color: #1b396a !important;
+    color: #fff !important;
+    font-size: 25px !important;
+    font-family: inherit;
+}
+.barra{
+    background-color: #807e82;
+}
+a.barra{
+    font-size: 25px;
+    color: #fff;
+    font-family: inherit;
+}
+img.barra{
+    width: 10%;
+}
