@@ -20,6 +20,7 @@ class CreateEvidenciasTable extends Migration
             $table->integer('horas_asignadas');
             $table->string('archivo');
             $table->string('carpeta');
+            $table->string('estado');
             $table->unsignedInteger('id_user');
             $table->unsignedInteger('id_alumno');
             $table->timestamps();
