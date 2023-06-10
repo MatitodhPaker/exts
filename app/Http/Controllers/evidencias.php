@@ -6,6 +6,7 @@ use App\Models\alumnos;
 use App\Models\evidencias as ModelsEvidencias;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class evidencias extends Controller
 {
@@ -14,11 +15,11 @@ class evidencias extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index($type, $id)
     {
-        $titulo = 'Creditos';
+        $titulo = $type;
         $items = alumnos::find($id);
-        $items_table = ModelsEvidencias::where('id_alumno','=',$id)->get();
+        $items_table = ModelsEvidencias::where('id_alumno','=',$id)->where('credito', '=', $type)->get();
         $appbartitle = 'Departamento de extraescolares';
         $id_usuario = Auth::user()->id;
         return view('modules/exts/creditos', compact('items_table','items', 'titulo', 'appbartitle', 'id_usuario'));
@@ -42,25 +43,24 @@ class evidencias extends Controller
     public function store(Request $request)
     {
         //dd($request);
+        $ruta = '';
         $item = new ModelsEvidencias();
-        $item ->tipo_evidencia = $request -> tipo_evidencia;
         $item->credito = $request ->credito;
-        $item->horas_asignadas = $request->horas_asignadas;
-        //$item->archivo = $request ->archivo;
+        $item ->tipo_evidencia = $request -> tipo_evidencia;
         $item->nombre_archivo = $request->nombre_archivo;
-        //$item->mooc = $request->mooc;
-        $item->nombre_mooc = $request->nombre_mooc;
-        $item->carpeta=$request->carpeta;
+        $item->ubicacion_carpeta=$request->carpeta;
+        $item->horas_asignadas = $request->horas_asignadas;
         $item->id_user = $request->id_user;
         $item->id_alumno = $request->id_alumno;
-        $item->estado = $request->estado;
-        //file->archivo->originalName
-        if($request->hasFile('archivo')){
-            $item->archivo = $request->file('archivo')->store('public/archivos');
+
+        if($request->tipo_evidencia == 'mooc' ){
+            $ruta = 'moocs';
+        }else{
+            $ruta = 'archivos';
         }
 
-        if($request->hasFile('mooc')){
-            $item->mooc = $request->file('mooc')->store('public/archivos');
+        if($request->hasFile('archivo')){
+            $item->ubicacion_archivo = $request->file('archivo')->store($request->credito.'/'.$ruta);
         }
 
         $item->save();
@@ -75,7 +75,6 @@ class evidencias extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -87,7 +86,7 @@ class evidencias extends Controller
     public function edit($id)
     {
         $titulo = 'Actualizar';
-        $items = ModelsEvidencias::find($id);
+        $items_table = ModelsEvidencias::find($id);
         return view('edit_evidencias', compact('items', 'titulo'));
     }
 
@@ -98,32 +97,31 @@ class evidencias extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update_evidencias(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $item = ModelsEvidencias::find($id);
         $item ->tipo_evidencia = $request -> tipo_evidencia;
         $item->credito = $request ->credito;
         $item->horas_asignadas = $request->horas_asignadas;
-
         //$item->archivo = $request ->archivo;
         $item->nombre_archivo = $request->nombre_archivo;
         //$item->mooc = $request->mooc;
         $item->nombre_mooc = $request->nombre_mooc;
         $item->carpeta=$request->carpeta;
-        $item->id_user = $request->id_user;
-        $item->id_alumno = $request->id_alumno;
         $item->estado = $request->estado;
         //file->archivo->originalName
         if($request->hasFile('archivo')){
-            $item->archivo = $request->file('archivo')->store('archivos');
+            $item->archivo = $request->file('archivo')->store('archivo');
+            // $item->archivo = $request->file('archivo')->getClientOriginalName();
+            // $request->file('archivo')->storeAs('archivos', $item->archivos);
         }
-
         if($request->hasFile('mooc')){
-            $item->mooc = $request->file('mooc')->store('archivos');
-        $item->save();
-        // alert()->success('Actualizado','Datos Actualizados');
-        return redirect('/inicio')->with('success', 'Datos ingresados');
+            $item->mooc = $request->file('mooc')->store('mooc');
+            // $item->mooc = $request->file('mooc')->getClientOriginalName();
+            // $request->file('mooc')->storeAs('mooc', $item->mooc);
         }
+        $item->save();
+        return redirect('/inicio')->with('success', 'Datos ingresados');
     }
 
     /**
@@ -133,7 +131,12 @@ class evidencias extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        //
+    {   
+        $item = ModelsEvidencias::find($id);
+        Storage::delete($item->archivo);
+        Storage::delete($item->mooc);
+        $item->delete();
+        return redirect('/inicio');
     }
+    
 }

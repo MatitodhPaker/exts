@@ -1,16 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
-<<<<<<< HEAD
 use App\Http\Controllers\Controller;
 use App\Models\alumnos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-=======
-use Illuminate\Http\Request;
-use RealRashid\SweetAlert\Facades\Alert;
->>>>>>> 8c7f721e11f047f2450f4efe5ee698bb8ccf0cb8
 
 class exts extends Controller
 {
@@ -20,7 +14,6 @@ class exts extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-<<<<<<< HEAD
     {   
         $items = alumnos::all();
         $titulo = 'Inicio';
@@ -28,13 +21,6 @@ class exts extends Controller
         $id_usuario=Auth::user()->id;
         return view('modules/exts/inicio', compact('titulo','appbartitle','id_usuario', 'items'));
         
-=======
-    {
-        //
-        $titulo='inicio';
-        Alert::success('holi', 'crayoli');
-        return view('welcome',compact('titulo'));
->>>>>>> 8c7f721e11f047f2450f4efe5ee698bb8ccf0cb8
     }
 
     /**

@@ -52,12 +52,12 @@ class registro extends Controller
         if ($request->input('nombre') == '' || $request->input('paterno') == ''|| $request->input('materno') == ''|| $request->input('no_control') == '' || $request->input('telefono') == ''
         || $request->input('carrera')== ''||$request->input('fecha_nacimiento')==''|| $request->input('media_superior')== ''|| $request->input('fecha_ingreso_tec')=='') {
             // Redirigir a la pestaña de nuevo con Sweet Alert de error
-            // alert()->error('Campos vacios','vuelve a intentarlo');
+            alert()->error('Campos vacios','vuelve a intentarlo');
             return redirect('/inicio')->with('error', 'Por favor, completa todos los campos');
         } else {
             // Redirigir a la pestaña de éxito con Sweet Alert de éxito
             $item->save();
-            // alert()->success('Guardado','Datos guardados');
+            alert()->success('Guardado','Datos guardados');
             return redirect('/inicio')->with('success', 'Datos ingresados');
         }
     }
@@ -109,7 +109,7 @@ class registro extends Controller
             $item ->media_superior = $request->media_superior;
             $item ->fecha_ingreso_tec= $request-> fecha_ingreso_tec;
         $item->save();
-        // alert()->success('Actualizado','Datos Actualizados');
+        alert()->success('Actualizado','Datos Actualizados');
         return redirect('/inicio')->with('success', 'Datos ingresados');
     }
 
