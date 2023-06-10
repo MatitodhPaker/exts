@@ -46,5 +46,4 @@ class Auth extends Controller
             return view('modules/auth/login', compact('titulo','appbartitle'));
         }
     }
-
 }

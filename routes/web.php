@@ -22,6 +22,7 @@ Route::get('/logout',[Auth::class, 'logout'])->name('logout');
 Route::get('/nuevo_usuario',[Auth::class,'nuevo_usuario']);
 Route::get('/inicio',[exts::class,'index'])->name('inicio');
 
+
 // alumno
 Route::post('/store',[registro::class,'store'])->name('store');
 Route::put('/update/{id}', [registro::class, 'update'])->name('update');

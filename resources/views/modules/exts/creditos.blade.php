@@ -16,6 +16,7 @@
             <input type="text" name="carrera" id="carrera" class="form-control" value="{{$items->carrera}}" disabled>
         </div>
 
+        
         <div class="col-sm-3">
             <div class="d-grid gap-2">
                 <button class="btn btn-outline-primary me-md-2" type="button" aria-current="page" href=""
