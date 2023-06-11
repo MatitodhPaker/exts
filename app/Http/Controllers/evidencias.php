@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\alumnos;
+use App\Models\creditos;
 use App\Models\evidencias as ModelsEvidencias;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +23,20 @@ class evidencias extends Controller
         $items_table = ModelsEvidencias::where('id_alumno','=',$id)->where('credito', '=', $type)->get();
         $appbartitle = 'Departamento de extraescolares';
         $id_usuario = Auth::user()->id;
-        return view('modules/exts/creditos', compact('items_table','items', 'titulo', 'appbartitle', 'id_usuario'));
+        $horas = ModelsEvidencias::where('id_alumno', '=',$id)->where('credito', '=', $type)->sum('horas_asignadas');
+        $conteo_mooc = 0;
+        $credito = creditos::where('id_alumno', '=', $id)->where('credito', '=', $type)->first();
+
+        foreach($items_table as $moocs)
+        {
+            // echo $moocs->tipo_evidencia;
+            if ($moocs->tipo_evidencia == 'mooc') {
+                $conteo_mooc +=1;
+            }
+        
+        }
+
+        return view('modules/exts/creditos', compact('items_table','items', 'titulo', 'appbartitle', 'id_usuario','horas', 'conteo_mooc', 'credito'));
     }
 
     /**
@@ -55,6 +69,8 @@ class evidencias extends Controller
 
         if($request->tipo_evidencia == 'mooc' ){
             $ruta = 'moocs';
+        }else if($request->tipo_evidencia == 'liberado'){
+            $ruta = 'liberados';
         }else{
             $ruta = 'archivos';
         }
@@ -64,7 +80,9 @@ class evidencias extends Controller
         }
 
         $item->save();
-        return redirect('/inicio')->with('success', 'Datos ingresados');
+        // return redirect('/inicio')->with('success', 'Datos ingresados');
+        // TODO: ALERTA AQUI
+        return back();
     }
 
     /**
@@ -99,29 +117,30 @@ class evidencias extends Controller
      */
     public function update(Request $request, $id)
     {
+        $ruta = '';
         $item = ModelsEvidencias::find($id);
-        $item ->tipo_evidencia = $request -> tipo_evidencia;
         $item->credito = $request ->credito;
-        $item->horas_asignadas = $request->horas_asignadas;
-        //$item->archivo = $request ->archivo;
+        $item ->tipo_evidencia = $request->tipo_evidencia;
         $item->nombre_archivo = $request->nombre_archivo;
-        //$item->mooc = $request->mooc;
-        $item->nombre_mooc = $request->nombre_mooc;
-        $item->carpeta=$request->carpeta;
-        $item->estado = $request->estado;
-        //file->archivo->originalName
+        $item->ubicacion_carpeta=$request->carpeta;
+        $item->horas_asignadas = $request->horas_asignadas;
+        $item->id_user = $request->id_user;
+        $item->id_alumno = $request->id_alumno;
+
+
+        if($request->tipo_evidencia == 'mooc' ){
+            $ruta = 'moocs';
+        }else{
+            $ruta = 'archivos';
+        }
+
         if($request->hasFile('archivo')){
-            $item->archivo = $request->file('archivo')->store('archivo');
-            // $item->archivo = $request->file('archivo')->getClientOriginalName();
-            // $request->file('archivo')->storeAs('archivos', $item->archivos);
+            $item->ubicacion_archivo = $request->file('archivo')->store($request->credito.'/'.$ruta);
         }
-        if($request->hasFile('mooc')){
-            $item->mooc = $request->file('mooc')->store('mooc');
-            // $item->mooc = $request->file('mooc')->getClientOriginalName();
-            // $request->file('mooc')->storeAs('mooc', $item->mooc);
-        }
+
         $item->save();
-        return redirect('/inicio')->with('success', 'Datos ingresados');
+        // return redirect('/inicio')->with('success', 'Datos ingresados');
+        return back();
     }
 
     /**

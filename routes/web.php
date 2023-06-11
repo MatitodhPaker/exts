@@ -2,6 +2,7 @@
 use App\Http\Controllers\Auth;
 use App\Http\Controllers\evidencias;
 use App\Http\Controllers\exts;
+use App\Http\Controllers\liberacion;
 use App\Http\Controllers\registro;
 use Illuminate\Support\Facades\Route;
 
@@ -38,4 +39,10 @@ Route::put('/update_credito/{id}', [evidencias::class, 'update'])->name('update_
 Route::get('/edit_credito/{id}',[evidencias::class, 'edit'])->name('edit_credito');
 Route::delete('/destroy_credito/{id}',[evidencias::class, 'destroy'])->name('destroy_credito');
 
+// horas
+Route::post('/store_horas',[liberacion::class, 'store'])->name('store_horas');
+Route::put('/update_horas/{id}',[liberacion::class,'update'])->name('update_horas');
+//Route::get('/liberar/{id}',[])->nombre('liberacion');
+
+Route::get('/liberar/{id}/{type}', [liberacion::class, 'liberar'])->name('liberar');
 

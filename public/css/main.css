@@ -4,7 +4,7 @@
     font-family: sans-serif;
 }
 .imagen{
-    width: 45%;
+    width: 40%;
     margin-left: 40px;
 }
 .footer{
@@ -38,5 +38,5 @@ a.barra{
     font-family: inherit;
 }
 img.barra{
-    width: 10%;
+    width: 8%;
 }
