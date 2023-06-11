@@ -17,6 +17,7 @@ class registro extends Controller
     {
         $titulo='Inicio';
         $items = alumnos::all();
+        // TODO: ALERTA AQUI
         return view ('inicio',compact('titulo','items'));
     }
 
@@ -57,7 +58,7 @@ class registro extends Controller
         } else {
             // Redirigir a la pestaña de éxito con Sweet Alert de éxito
             $item->save();
-            alert()->success('Guardado','Datos guardados');
+            // TODO: ALERTA AQUI
             return redirect('/inicio')->with('success', 'Datos ingresados');
         }
     }
@@ -73,6 +74,7 @@ class registro extends Controller
     {
         $titulo = "Eliminar";
         $items = alumnos::find($id);
+        // TODO: ALERTA AQUI
         return view("eliminar", compact('items', 'titulo'));
     }
 
@@ -86,6 +88,7 @@ class registro extends Controller
     {
         $titulo = 'Actualizar';
         $items = alumnos::find($id);
+        // TODO: ALERTA AQUI
         return view('edit', compact('items', 'titulo'));
     }
 
@@ -109,7 +112,7 @@ class registro extends Controller
             $item ->media_superior = $request->media_superior;
             $item ->fecha_ingreso_tec= $request-> fecha_ingreso_tec;
         $item->save();
-        alert()->success('Actualizado','Datos Actualizados');
+        // TODO: ALERTA AQUI
         return redirect('/inicio')->with('success', 'Datos ingresados');
     }
 
@@ -123,7 +126,7 @@ class registro extends Controller
     {
         $item = alumnos::find($id);
         $item->delete();
-        
+        // TODO: ALERTA AQUI
         return redirect('/inicio');
     }
 }

@@ -45,7 +45,7 @@ class liberacion extends Controller
         $item->horas = $request -> horas_totales;
         $item->id_alumno = $request -> id_alumno;
         $item->save();
-        // return redirect('/inicio')->with('success', 'Datos ingresados');
+        // TODO: ALERTA AQUI
         return back();
     }
 
@@ -86,7 +86,7 @@ class liberacion extends Controller
         $item->horas = $request -> horas_totales;
         $item->id_alumno = $request -> id_alumno;
         $item->save();
-        // return redirect('/inicio')->with('success', 'Datos ingresados');
+        // TODO: ALERTA AQUI
         return back();
     }
 

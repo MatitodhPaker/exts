@@ -19,6 +19,7 @@ class Auth extends Controller
     {
         $titulo = 'Login';
         $appbartitle = 'departamento de extraescolares';
+        // TODO: ALERTA AQUI
         return view('modules/auth/login', compact('titulo','appbartitle'));
     }
 
@@ -29,16 +30,19 @@ class Auth extends Controller
         $item->password = Hash::make('12345678');
         $item->user_name = 'Roldan Aquino Segura';
         $item->save();
+        // TODO: ALERTA AQUI
         return $item;
     }
     public function logout(){
         FacadesAuth::logout();
         Session::flush();
+        // TODO: ALERTA AQUI
         return redirect()->route('login');
     }
     public function logear(Request $request) {
         $credenciales = $request->only("name", "password");
         if (FacadesAuth::attempt($credenciales)) {
+            // TODO: ALERTA AQUI
             return redirect()->route('inicio');
         } else {
             $titulo = 'Login';
