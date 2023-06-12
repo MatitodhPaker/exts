@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\alumnos;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class registro extends Controller
 {
@@ -58,7 +59,7 @@ class registro extends Controller
         } else {
             // Redirigir a la pestaña de éxito con Sweet Alert de éxito
             $item->save();
-            // TODO: ALERTA AQUI
+            Alert::success('Exito', 'Alumno registrado con exito');
             return redirect('/inicio')->with('success', 'Datos ingresados');
         }
     }
@@ -74,7 +75,7 @@ class registro extends Controller
     {
         $titulo = "Eliminar";
         $items = alumnos::find($id);
-        // TODO: ALERTA AQUI
+        Alert::info('Eliminar', 'Estas seguro de eliminnar alumno');
         return view("eliminar", compact('items', 'titulo'));
     }
 
@@ -88,7 +89,7 @@ class registro extends Controller
     {
         $titulo = 'Actualizar';
         $items = alumnos::find($id);
-        // TODO: ALERTA AQUI
+        Alert::warning('Actualizar', 'estas seguro de actulazar la informacion del alumno');
         return view('edit', compact('items', 'titulo'));
     }
 
@@ -112,7 +113,7 @@ class registro extends Controller
             $item ->media_superior = $request->media_superior;
             $item ->fecha_ingreso_tec= $request-> fecha_ingreso_tec;
         $item->save();
-        // TODO: ALERTA AQUI
+        Alert::success('Exito', 'Actualizado con exito');
         return redirect('/inicio')->with('success', 'Datos ingresados');
     }
 
@@ -126,7 +127,7 @@ class registro extends Controller
     {
         $item = alumnos::find($id);
         $item->delete();
-        // TODO: ALERTA AQUI
+        Alert::success('Exito', 'Eliminado con exito');
         return redirect('/inicio');
     }
 }

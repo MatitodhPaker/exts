@@ -8,6 +8,7 @@ use App\Models\creditos;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class liberacion extends Controller
 {
@@ -45,7 +46,7 @@ class liberacion extends Controller
         $item->horas = $request -> horas_totales;
         $item->id_alumno = $request -> id_alumno;
         $item->save();
-        // TODO: ALERTA AQUI
+        Alert::success('Exito', 'credito Guardado con exito');
         return back();
     }
 
@@ -86,7 +87,7 @@ class liberacion extends Controller
         $item->horas = $request -> horas_totales;
         $item->id_alumno = $request -> id_alumno;
         $item->save();
-        // TODO: ALERTA AQUI
+        Alert::success('Exito', 'credito actualizado con exito');
         return back();
     }
 

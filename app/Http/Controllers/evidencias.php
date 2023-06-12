@@ -8,6 +8,7 @@ use App\Models\evidencias as ModelsEvidencias;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class evidencias extends Controller
 {
@@ -35,7 +36,7 @@ class evidencias extends Controller
             }
         
         }
-        // TODO: ALERTA AQUI
+        // TODO: ALERTA AQUI que alerta va 
         return view('modules/exts/creditos', compact('items_table','items', 'titulo', 'appbartitle', 'id_usuario','horas', 'conteo_mooc', 'credito'));
     }
 
@@ -81,7 +82,7 @@ class evidencias extends Controller
 
         $item->save();
         // return redirect('/inicio')->with('success', 'Datos ingresados');
-        // TODO: ALERTA AQUI
+        Alert::success('Exito', 'Datos Guardados');
         return back();
     }
 
@@ -105,7 +106,7 @@ class evidencias extends Controller
     {
         $titulo = 'Actualizar';
         $items_table = ModelsEvidencias::find($id);
-        // TODO: ALERTA AQUI
+        Alert::warning('Actualizar', 'Esta seguro de que quiere ectualizar');
         return view('edit_evidencias', compact('items', 'titulo'));
     }
 
@@ -140,7 +141,7 @@ class evidencias extends Controller
         }
 
         $item->save();
-        // TODO: ALERTA AQUI
+        Alert::success('Exito', 'Actualizado con exito');
         return back();
     }
 
@@ -156,7 +157,7 @@ class evidencias extends Controller
         Storage::delete($item->archivo);
         Storage::delete($item->mooc);
         $item->delete();
-        // TODO: ALERTA AQUI
+        Alert::success('Exito','Archivo eliminado');
         return redirect('/inicio');
     }
     
